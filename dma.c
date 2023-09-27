@@ -3,26 +3,26 @@
 #include<string.h>
 
 int main(int argc, char *argv[]){
-  char *a=calloc(2, sizeof(char));
+  // char *a=calloc(1, sizeof(char));
+  char *a=malloc(2*sizeof(char));
+  strcpy(a, "x");
   if(a==NULL){
     return 1;
   }
-	printf("enter a word: ");
+  printf("enter a word: ");
   int i=0;
   int j=0;
   while(*(a+j)!='\n'){
     j=i;
     i++;
-    int b=i+2;
-    int c=i+1;
-    a=realloc(a, b);
+    a=realloc(a, i+1);
     if(a==NULL){
       return 2;
     }
-    *(a+c)='\0'; //initialize the realloc
+    *(a+i)='\0';
     scanf("%c", a+j);
   }
-  *(a+j)='\0'; //replace the newline character '\n' at the end of the string with null character
+  *(a+j)='\0';
   printf("a: %s\n", a);
   printf("strlen of a: %ld\n", strlen(a));
   free(a);
@@ -48,7 +48,9 @@ int main(int argc, char *argv[]){
 
 char* init_subject(){
 	char *subject_input;
-	subject_input=(char *)calloc(2, sizeof(char));
+	//subject_input=(char *)calloc(1, sizeof(char));
+	subject_input=malloc(2*sizeof(char));
+  strcpy(subject_input, "x");
 	if(subject_input==NULL){
 		printf("unable to allocate memory for subject_input pointer at function init_subject()");
 		return subject_input;
@@ -59,14 +61,11 @@ char* init_subject(){
   while(*(subject_input+j)!='\n'){
     j=i;
     i++;
-    int b=i+2;
-    int c=i+1;
-    subject_input=realloc(subject_input, b);
+    subject_input=realloc(subject_input, i+1);
     if(subject_input==NULL){
       return subject_input;
     }
-
-    *(subject_input+c)='\0'; //initialize the realloc
+    *(subject_input+i)='\0'; //initialize the realloc
     scanf("%c", subject_input+j);
   }
 	int str_len=strlen(subject_input);
