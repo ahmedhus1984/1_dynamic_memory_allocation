@@ -1,32 +1,35 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-int main(int argc, char *argv[]){
-  // char *a=calloc(1, sizeof(char));
-  char *a=malloc(2*sizeof(char));
-  strcpy(a, "x");
-  if(a==NULL){
-    return 1;
-  }
-  printf("enter a word: ");
-  int i=0;
-  int j=0;
-  while(*(a+j)!='\n'){
-    j=i;
-    i++;
-    a=realloc(a, i+1);
-    if(a==NULL){
-      return 2;
+int main(void) {
+    char *a = malloc(1);  // Start with 1 byte for '\0'
+    if (a == NULL) {
+        return 1;
     }
-    *(a+i)='\0';
-    scanf("%c", a+j);
-  }
-  *(a+j)='\0';
-  printf("a: %s\n", a);
-  printf("strlen of a: %ld\n", strlen(a));
-  free(a);
-  return 0;
+
+    a[0] = '\0';  // Start with an empty string
+
+    printf("enter a word: ");
+
+    int i = 0;
+    char c;
+    while (scanf("%c", &c) == 1 && c != '\n') {
+        char *tmp = realloc(a, i + 2);  // +1 for new char, +1 for '\0'
+        if (tmp == NULL) {
+            free(a);
+            return 2;
+        }
+        a = tmp;
+        a[i] = c;
+        a[i + 1] = '\0';
+        i++;
+    }
+
+    printf("a: %s\n", a);
+    printf("strlen of a: %ld\n", strlen(a));
+    free(a);
+    return 0;
 }
 
 /*
